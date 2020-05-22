@@ -21,8 +21,12 @@ CARDS = {
 
 class Blackjack():
     def __init__(self):
-        self.bWinner = False
+        self._player1 = ""
+        self._player2 = ""
     
+    def prevwinner(self):
+        pass
+
     def dealhand(self, player1, player2):
         pass
 
@@ -48,14 +52,11 @@ def main():
         print("**" * 20)
     
     
-    previous = False
+    first_game = True
     game = Blackjack()
     # Main game loop
     while True:
-        if previous:
-            first_player = game.winner()
-        else:
-            first_player = game.randomize()
+        if first_game:
         
         game.dealhand(int(player1), int(player2))
         print("Dealing hand...")
