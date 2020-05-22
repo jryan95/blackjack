@@ -32,9 +32,9 @@ class Blackjack():
     def prevwinner(self):
         pass
 
-    def dealhand(self, player1, player2):
+    def dealhand(self, player1, player2=None):
         while len(self._player1cards) != 2:
-            self._player1cards.append(list(random.choice(CARDS.items)))
+            self._player1cards.append(random.choice(CARDS))
             if len(self._player1cards) == 2:
                 print("You have ", self._player1cards)
 
@@ -54,8 +54,10 @@ def main():
     elif players == 2:
         player1 = input("Player 1, please input your name: ")
         player2 = input("Player 2, please input your name: ")
+        two_player = True
     else:
         player1 = input("Player 1, please input your name: ")
+        two_player = False
         print("Prepare to play against the dealer.")
         print("**" * 20)
     
@@ -69,8 +71,12 @@ def main():
         
         print("Dealing hand...")
         print("**" * 20)
-        game.dealhand(player1, player2)
+        if two_player:
+            game.dealhand(player1, player2)
+        else:
+            game.dealhand(player1)
 
+        break
 
 
 
