@@ -3,6 +3,8 @@
 __author__ = "Jon Ryan"
 __version__ = "0.0.1"
 
+import random
+
 CARDS = {
     0 : "A",
     1 : "1",
@@ -23,12 +25,18 @@ class Blackjack():
     def __init__(self):
         self._player1 = ""
         self._player2 = ""
+        self._player1cards = []
+        self._player2cards = []
+        self._dealercards = []
     
     def prevwinner(self):
         pass
 
     def dealhand(self, player1, player2):
-        pass
+        while len(self._player1cards) != 2:
+            self._player1cards.append(list(random.choice(CARDS.items)))
+            if len(self._player1cards) == 2:
+                print("You have ", self._player1cards)
 
     def hit(self):
         pass
@@ -48,7 +56,7 @@ def main():
         player2 = input("Player 2, please input your name: ")
     else:
         player1 = input("Player 1, please input your name: ")
-        print("Prepare to play against the computer.")
+        print("Prepare to play against the dealer.")
         print("**" * 20)
     
     
@@ -56,11 +64,13 @@ def main():
     game = Blackjack()
     # Main game loop
     while True:
-        if first_game:
+        if not first_game:
+            previous_winner = game.prevwinner()
         
-        game.dealhand(int(player1), int(player2))
         print("Dealing hand...")
         print("**" * 20)
+        game.dealhand(player1, player2)
+
 
 
 
