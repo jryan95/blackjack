@@ -1,0 +1,7 @@
+1. Start of game
+    - choose number of players, if 1: player vs computer
+    - limit to 2 players until later online version is created(if ever)
+    - choose names for players
+    - deal hand to players, random cards between 1-K
+    - if first game, randomized player goes first, if not, previous winner goes first
+    - 
