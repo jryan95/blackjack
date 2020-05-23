@@ -31,13 +31,19 @@ class Blackjack():
     def dealhand(self, player1=None, player2=None):
         while len(self._player1cards) != 2:
             self._player1cards.append(random.choice(CARDS))
+            card1 = self._player1cards[-1][0]
+            card2 = self._player1cards[0][0]
             if len(self._player1cards) == 2:
-                print("You have ", self._player1cards[-1][0])
+                print("You have ", card1, " &", card2)
         while len(self._dealercards) != 2:
             self._dealercards.append(random.choice(CARDS))
             if len(self._dealercards) == 2:
+                # [-1] gets the last element in the iterable
                 print("Dealer has X &", self._dealercards[-1][0])
         return
+    
+    def checkhands(self):
+        
 
     def hit(self):
         pass
@@ -58,10 +64,7 @@ def main():
         print("Dealing hand...")
         game.dealhand()
         print("**" * 20)
-
-
-
-        break
+        if game.checkhands() > 21:
 
 
 
