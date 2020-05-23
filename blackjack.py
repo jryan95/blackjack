@@ -25,16 +25,20 @@ class Blackjack():
     def __init__(self):
         self._player1 = ""
         self._player2 = ""
-        self._player1cards = []
+        self._playercards = []
         self._dealercards = []
+        self._card1 = 0
+        self._card2 = 0
+        self._dealercard1 = 0
+        self._dealercard2 = 0
 
     def dealhand(self, player1=None, player2=None):
-        while len(self._player1cards) != 2:
-            self._player1cards.append(random.choice(CARDS))
-            card1 = self._player1cards[-1][0]
-            card2 = self._player1cards[0][0]
-            if len(self._player1cards) == 2:
-                print("You have ", card1, " &", card2)
+        while len(self._playercards) != 2:
+            self._playercards.append(random.choice(CARDS))
+            self._card1 = self._playercards[-1][0]
+            self._card2 = self._playercards[0][0]
+            if len(self._playercards) == 2:
+                print("You have ", self._card1, " &", self._card2)
         while len(self._dealercards) != 2:
             self._dealercards.append(random.choice(CARDS))
             if len(self._dealercards) == 2:
@@ -43,7 +47,7 @@ class Blackjack():
         return
     
     def checkhands(self):
-        
+        print(self._card1, self._card2)
 
     def hit(self):
         pass
@@ -64,7 +68,7 @@ def main():
         print("Dealing hand...")
         game.dealhand()
         print("**" * 20)
-        if game.checkhands() > 21:
+        game.checkhands()
 
 
 
