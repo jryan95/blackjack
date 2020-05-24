@@ -32,6 +32,7 @@ class Blackjack():
         self._dealercard1 = 0
         self._dealercard2 = 0
         self._inhandvalue = 0
+        self._dinhandvalue = 0
 
     def dealhand(self, player1=None, player2=None):
         while len(self._playercards) != 2:
@@ -53,6 +54,22 @@ class Blackjack():
         self._card1 = self._playercards[-1][1]
         self._card2 = self._playercards[0][1]
         playerhand = sum([self._card1, self._card2])
+
+        self._dealercard1 = self._dealercards[-1][1]
+        self._dealercard2 = self._dealercards[0][1]
+        dealerhand = sum([self._dealercard1, self._dealercard2])
+
+        # checking dealer cards
+        if dealerhand > 21:
+            if self._dealercard1 or self._dealercard2 == 11:
+                self._dinhandvalue = dealerhand - 10
+            else:
+                print("Dealer busts, you win!")
+        elif dealerhand == 21:
+            print("Dealer wins!")
+        else:
+            self._dinhandvalue = dealerhand
+        
         # checking player cards
         if playerhand > 21:
             if self._card1 or self._card2 == 11:
@@ -68,7 +85,8 @@ class Blackjack():
             print("You have a total of", self._inhandvalue, ", hit or stay?")
         
     def hit(self):
-        pass
+        self._playercards.append(random.choice(CARDS))
+        print("You now have")
 
     def stay(self):
         pass
