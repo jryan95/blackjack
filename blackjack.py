@@ -86,10 +86,12 @@ class Blackjack():
         
     def hit(self):
         self._playercards.append(random.choice(CARDS))
-        print("You now have")
+        print("You now have", self._playercards)
 
     def stay(self):
-        pass
+        _cards = sum([self._playercards])
+        print("You have stayed at", _cards, ".")
+        
 
 
 
