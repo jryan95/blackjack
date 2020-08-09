@@ -1,7 +1,7 @@
 # main blackjack application
 
 __author__ = "Jon Ryan"
-__version__ = "0.0.1"
+__version__ = "0.0.2"
 
 import random
 
@@ -23,18 +23,8 @@ CARDS = {
 
 class Blackjack():
     def __init__(self):
-        self._player1 = ""
-        self._player2 = ""
-        self._playercards = []
-        self._dealercards = []
-        self._card1 = 0
-        self._card2 = 0
-        self._dealercard1 = 0
-        self._dealercard2 = 0
-        self._inhandvalue = 0
-        self._dinhandvalue = 0
 
-        self._cards = {
+        self.cards = {
             'dealer': {
                 'cards': [],
                 'card1': 0,
@@ -42,6 +32,7 @@ class Blackjack():
                 'card3': 0,
                 'card4': 0,
                 'card5': 0,
+                'inhandvalue': 0,
             },
             'player1' : {
                 'name': '',
@@ -61,77 +52,67 @@ class Blackjack():
                 'card3': 0,
                 'card4': 0,
                 'card5': 0,
+                'inhandvalue': 0,
             },
         }
 
-        self._cards['dealer']['cards'].append(random.choice(CARDS))
-        self._cards['dealer']['card1'] = self._cards['dealer']['cards'][0][0]
-        self._cards['dealer']['card2'] = self._playercards[-1][0]
-        print(f"You have {self._cards['player1']['card1']} & {self._cards['player1']['card2']}")
-
-        self._cards['dealer']['cards'][-1][0]
-        
     def dealhand(self, player1=None, player2=None):
-        while len(self._playercards) != 2:
-            self._playercards.append(random.choice(CARDS))
-            self._card1 = self._playercards[-1][0]
-            self._card2 = self._playercards[0][0]
-            if len(self._playercards) == 2:
-                print("You have", self._card1, "&", self._card2)
-        while len(self._dealercards) != 2:
-            self._dealercards.append(random.choice(CARDS))
-            self._dealercard1 = self._dealercards[-1][0]
-            self._dealercard2 = self._dealercards[0][0]
-            if len(self._dealercards) == 2:
-                # [-1] gets the last element in the iterable
-                print("Dealer is showing a", self._dealercards[-1][0])
-        return
+        while len(self.cards['player1']['cards']) != 2:
+            self.cards['player1']['cards'].append(random.choice(CARDS))
+            self.cards['player1']['card1'] = self.cards['player1']['cards'][-1][0]
+            self.cards['player1']['card2'] = self.cards['player1']['cards'][0][0]
+        
+        while len(self.cards['dealer']['cards']) != 2:
+            self.cards['dealer']['cards'].append(random.choice(CARDS))
+            self.cards['dealer']['card1'] = self.cards['dealer']['cards'][-1][0]
+            self.cards['dealer']['card2'] = self.cards['dealer']['cards'][0][0]
+        
+        print(f"You have {self.cards['player1']['card1']} & {self.cards['player1']['card2']}.")
+        print(f"Dealer is showing a {self.cards['dealer']['cards'][-1][0]}.")
     
     def checkhand(self, player=None, dealer=None):
-        self._card1 = self._playercards[-1][1]
-        self._card2 = self._playercards[0][1]
-        playerhand = sum([self._card1, self._card2])
+        # Assign integer values
+        self.cards['player1']['card1'] = self.cards['player1']['cards'][-1][1]
+        self.cards['player1']['card2'] = self.cards['player1']['cards'][0][1]
+        playerhand = sum([self.cards['player1']['card1'], self.cards['player1']['card2']])
 
-        self._dealercard1 = self._dealercards[-1][1]
-        self._dealercard2 = self._dealercards[0][1]
-        dealerhand = sum([self._dealercard1, self._dealercard2])
+        dealerhand = sum([self.cards['player1']['card1'], self.cards['player1']['card2']])
+        self.cards['dealer']['card1'] = self.cards['dealer']['cards'][-1][1]
+        self.cards['dealer']['card2'] = self.cards['dealer']['cards'][0][1]
 
         # checking dealer cards
         if dealerhand > 21:
-            if self._dealercard1 or self._dealercard2 == 11:
-                self._dinhandvalue = dealerhand - 10
+            if self.cards['dealer']['card1'] or self.cards['dealer']['card2'] == 11:
+                self.cards['dealer']['inhandvalue'] = dealerhand - 10
             else:
                 print("Dealer busts, you win!")
         elif dealerhand == 21:
             print("Dealer wins!")
         else:
-            self._dinhandvalue = dealerhand
+            self.cards['dealer']['inhandvalue'] = dealerhand
         
         # checking player cards
         if playerhand > 21:
-            if self._card1 or self._card2 == 11:
-                self._inhandvalue = playerhand - 10
-                print("You have a total of", self._inhandvalue, ", hit or stay?")
+            if self.cards['player1']['card1'] or self.cards['player1']['card2'] == 11:
+                self.cards['player1']['inhandvalue'] = playerhand - 10
+                print(f"You have a total of {self.cards['player1']['inhandvalue']}, hit or stay?")
                 # option = input("You have a total of", self._inhandvalue, ", hit or stay?")
             else:
                 print("You busted!")
         elif playerhand == 21:
             print("Blackjack!")
         else:
-            self._inhandvalue = playerhand
-            print("You have a total of", self._inhandvalue, ", hit or stay?")
+            self.cards['player1']['inhandvalue'] = playerhand
+            print(f"You have a total of {self.cards['player1']['inhandvalue']}, hit or stay?")
         
     def hit(self):
-        self._playercards.append(random.choice(CARDS))
-        print("You now have", self._playercards)
+        self.cards['player1']['cards'].append(random.choice(CARDS))
+        print(f"You now have {self.cards['player1']['cards']}.")
 
     def stay(self):
-        _cardstotal = self._playercards[0][1] + self._playercards[1][1]
-        print(f"You have stayed at {_cardstotal}.")
+        cardstotal = self.cards['player1']['cards'][0][1] + self.cards['player1']['cards'][1][1]
+        print(f"You have stayed at {cardstotal}.")
         
-
-
-
 
 def main():
     print('Welcome to Blackjack v{} by {}'.format
