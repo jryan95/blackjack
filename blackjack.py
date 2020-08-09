@@ -34,6 +34,43 @@ class Blackjack():
         self._inhandvalue = 0
         self._dinhandvalue = 0
 
+        self._cards = {
+            'dealer': {
+                'cards': [],
+                'card1': 0,
+                'card2': 0,
+                'card3': 0,
+                'card4': 0,
+                'card5': 0,
+            },
+            'player1' : {
+                'name': '',
+                'cards': [],
+                'card1': 0,
+                'card2': 0,
+                'card3': 0,
+                'card4': 0,
+                'card5': 0,
+                'inhandvalue': 0,
+            },
+            'player2': {
+                'name': '',
+                'cards': [],
+                'card1': 0,
+                'card2': 0,
+                'card3': 0,
+                'card4': 0,
+                'card5': 0,
+            },
+        }
+
+        self._cards['dealer']['cards'].append(random.choice(CARDS))
+        self._cards['dealer']['card1'] = self._cards['dealer']['cards'][0][0]
+        self._cards['dealer']['card2'] = self._playercards[-1][0]
+        print(f"You have {self._cards['player1']['card1']} & {self._cards['player1']['card2']}")
+
+        self._cards['dealer']['cards'][-1][0]
+        
     def dealhand(self, player1=None, player2=None):
         while len(self._playercards) != 2:
             self._playercards.append(random.choice(CARDS))
@@ -47,7 +84,7 @@ class Blackjack():
             self._dealercard2 = self._dealercards[0][0]
             if len(self._dealercards) == 2:
                 # [-1] gets the last element in the iterable
-                print("Dealer has X &", self._dealercards[-1][0])
+                print("Dealer is showing a", self._dealercards[-1][0])
         return
     
     def checkhand(self, player=None, dealer=None):
@@ -89,8 +126,8 @@ class Blackjack():
         print("You now have", self._playercards)
 
     def stay(self):
-        _cards = sum([self._playercards])
-        print("You have stayed at", _cards, ".")
+        _cardstotal = self._playercards[0][1] + self._playercards[1][1]
+        print(f"You have stayed at {_cardstotal}.")
         
 
 
@@ -111,9 +148,9 @@ def main():
         print("**" * 20)
         game.checkhand()
         option = input(">> ")
-        if option.lower() is 'hit':
+        if option.lower() == 'hit':
             game.hit()
-        elif option.lower() is 'stay':
+        elif option.lower() == 'stay':
             game.stay()
         else:
             print("Invalid option.")
