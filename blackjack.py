@@ -70,7 +70,11 @@ class Blackjack():
         print(f"You have {self.cards['player1']['card1']} & {self.cards['player1']['card2']}.")
         print(f"Dealer is showing a {self.cards['dealer']['cards'][-1][0]}.")
     
-    def checkhand(self, player=None, dealer=None):
+    def _check_cards(player=None, dealer=None):
+        """ Check if cards are assigned, otherwise assign them. """
+        for
+
+    def checkhand(self, player=None, dealer=1):
         # Assign integer values
         self.cards['player1']['card1'] = self.cards['player1']['cards'][-1][1]
         self.cards['player1']['card2'] = self.cards['player1']['cards'][0][1]
@@ -88,6 +92,8 @@ class Blackjack():
                 print("Dealer busts, you win!")
         elif dealerhand == 21:
             print("Dealer wins!")
+        elif dealerhand < 18:
+            self.hit(dealer)
         else:
             self.cards['dealer']['inhandvalue'] = dealerhand
         
@@ -104,10 +110,15 @@ class Blackjack():
         else:
             self.cards['player1']['inhandvalue'] = playerhand
             print(f"You have a total of {self.cards['player1']['inhandvalue']}, hit or stay?")
-        
-    def hit(self):
-        self.cards['player1']['cards'].append(random.choice(CARDS))
-        print(f"You now have {self.cards['player1']['cards']}.")
+
+
+    def hit(self, dealer=0):
+        if dealer != 0:
+            self.cards['dealer']['cards'].append(random.choice(CARDS))
+            print(f"The dealer now has {self.cards['dealer']['cards']}.")
+        else:
+            self.cards['player1']['cards'].append(random.choice(CARDS))
+            print(f"You now have {self.cards['player1']['cards']}.")
 
     def stay(self):
         cardstotal = self.cards['player1']['cards'][0][1] + self.cards['player1']['cards'][1][1]
@@ -129,9 +140,9 @@ def main():
         print("**" * 20)
         game.checkhand()
         option = input(">> ")
-        if option.lower() == 'hit':
+        if option.lower() == 'hit' or option.lower() == 'h':
             game.hit()
-        elif option.lower() == 'stay':
+        elif option.lower() == 'stay' or option.lower() == 's':
             game.stay()
         else:
             print("Invalid option.")
